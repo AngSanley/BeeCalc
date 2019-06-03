@@ -15,7 +15,9 @@ package com.angsanley.beecalc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -55,62 +57,74 @@ public class MainActivity extends AppCompatActivity {
 
         numberOneEdit.requestFocus();
 
+        numberTwoEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                doCalculation();
+                return false;
+            }
+        });
+
         calculateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean fieldError = false;
-
-                if (numberTwoEdit.getText().toString().trim().equalsIgnoreCase("")) {
-                    numberTwoEdit.setError(getString(R.string.field_required));
-                    numberTwoEdit.requestFocus();
-                    fieldError = true;
-                }
-
-                if (numberOneEdit.getText().toString().trim().equalsIgnoreCase("")) {
-                    numberOneEdit.setError(getString(R.string.field_required));
-                    numberOneEdit.requestFocus();
-                    fieldError = true;
-                }
-
-                if (!fieldError) {
-                    int numberOne = Integer.parseInt(numberOneEdit.getText().toString());
-                    int numberTwo = Integer.parseInt(numberTwoEdit.getText().toString());
-
-                    // addition
-                    if (operationEdit.getText().toString().equals(getString(R.string.addition))) {
-                        int result = numberOne + numberTwo;
-                        resultText.setText(String.valueOf(result));
-                    }
-
-                    // subtraction
-                    if (operationEdit.getText().toString().equals(getString(R.string.subtraction))) {
-                        int result = numberOne - numberTwo;
-                        resultText.setText(String.valueOf(result));
-                    }
-
-                    // multiplication
-                    if (operationEdit.getText().toString().equals(getString(R.string.multiplication))) {
-                        int result = numberOne * numberTwo;
-                        resultText.setText(String.valueOf(result));
-                    }
-
-                    // division
-                    if (operationEdit.getText().toString().equals(getString(R.string.division))) {
-                        String output = "";
-                        try {
-                            int result = numberOne / numberTwo;
-                            output = String.valueOf(result);
-                        } catch (Exception e) {
-                            numberOneEdit.setError(e.getLocalizedMessage());
-                            numberTwoEdit.setError(e.getLocalizedMessage());
-                            numberOneEdit.requestFocus();
-                            output = getString(R.string.error);
-                        } finally {
-                            resultText.setText(output);
-                        }
-                    }
-                }
+                doCalculation();
             }
         });
+    }
+
+    private void doCalculation() {
+        boolean fieldError = false;
+
+        if (numberTwoEdit.getText().toString().trim().equalsIgnoreCase("")) {
+            numberTwoEdit.setError(getString(R.string.field_required));
+            numberTwoEdit.requestFocus();
+            fieldError = true;
+        }
+
+        if (numberOneEdit.getText().toString().trim().equalsIgnoreCase("")) {
+            numberOneEdit.setError(getString(R.string.field_required));
+            numberOneEdit.requestFocus();
+            fieldError = true;
+        }
+
+        if (!fieldError) {
+            int numberOne = Integer.parseInt(numberOneEdit.getText().toString());
+            int numberTwo = Integer.parseInt(numberTwoEdit.getText().toString());
+
+            // addition
+            if (operationEdit.getText().toString().equals(getString(R.string.addition))) {
+                int result = numberOne + numberTwo;
+                resultText.setText(String.valueOf(result));
+            }
+
+            // subtraction
+            if (operationEdit.getText().toString().equals(getString(R.string.subtraction))) {
+                int result = numberOne - numberTwo;
+                resultText.setText(String.valueOf(result));
+            }
+
+            // multiplication
+            if (operationEdit.getText().toString().equals(getString(R.string.multiplication))) {
+                int result = numberOne * numberTwo;
+                resultText.setText(String.valueOf(result));
+            }
+
+            // division
+            if (operationEdit.getText().toString().equals(getString(R.string.division))) {
+                String output = "";
+                try {
+                    int result = numberOne / numberTwo;
+                    output = String.valueOf(result);
+                } catch (Exception e) {
+                    numberOneEdit.setError(e.getLocalizedMessage());
+                    numberTwoEdit.setError(e.getLocalizedMessage());
+                    numberOneEdit.requestFocus();
+                    output = getString(R.string.error);
+                } finally {
+                    resultText.setText(output);
+                }
+            }
+        }
     }
 }
