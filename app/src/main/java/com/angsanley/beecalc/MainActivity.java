@@ -13,8 +13,10 @@
 
 package com.angsanley.beecalc;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,5 +24,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String[] OPERATION = new String[] {getString(R.string.addition), getString(R.string.subtraction), getString(R.string.multiplication), getString(R.string.division)};
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.dropdown_menu_popup_item,
+                OPERATION);
+
+        AutoCompleteTextView editTextFilledExposedDropdown =
+                findViewById(R.id.filled_exposed_dropdown);
+        editTextFilledExposedDropdown.setAdapter(adapter);
     }
 }
