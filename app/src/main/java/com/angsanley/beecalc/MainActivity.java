@@ -15,6 +15,7 @@ package com.angsanley.beecalc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -51,5 +52,65 @@ public class MainActivity extends AppCompatActivity {
                 OPERATION);
 
         operationEdit.setAdapter(adapter);
+
+        numberOneEdit.requestFocus();
+
+        calculateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean fieldError = false;
+
+                if (numberTwoEdit.getText().toString().trim().equalsIgnoreCase("")) {
+                    numberTwoEdit.setError(getString(R.string.field_required));
+                    numberTwoEdit.requestFocus();
+                    fieldError = true;
+                }
+
+                if (numberOneEdit.getText().toString().trim().equalsIgnoreCase("")) {
+                    numberOneEdit.setError(getString(R.string.field_required));
+                    numberOneEdit.requestFocus();
+                    fieldError = true;
+                }
+
+                if (!fieldError) {
+                    int numberOne = Integer.parseInt(numberOneEdit.getText().toString());
+                    int numberTwo = Integer.parseInt(numberTwoEdit.getText().toString());
+
+                    // addition
+                    if (operationEdit.getText().toString().equals(getString(R.string.addition))) {
+                        int result = numberOne + numberTwo;
+                        resultText.setText(String.valueOf(result));
+                    }
+
+                    // subtraction
+                    if (operationEdit.getText().toString().equals(getString(R.string.subtraction))) {
+                        int result = numberOne - numberTwo;
+                        resultText.setText(String.valueOf(result));
+                    }
+
+                    // multiplication
+                    if (operationEdit.getText().toString().equals(getString(R.string.multiplication))) {
+                        int result = numberOne * numberTwo;
+                        resultText.setText(String.valueOf(result));
+                    }
+
+                    // division
+                    if (operationEdit.getText().toString().equals(getString(R.string.division))) {
+                        String output = "";
+                        try {
+                            int result = numberOne / numberTwo;
+                            output = String.valueOf(result);
+                        } catch (Exception e) {
+                            numberOneEdit.setError(e.getLocalizedMessage());
+                            numberTwoEdit.setError(e.getLocalizedMessage());
+                            numberOneEdit.requestFocus();
+                            output = getString(R.string.error);
+                        } finally {
+                            resultText.setText(output);
+                        }
+                    }
+                }
+            }
+        });
     }
 }

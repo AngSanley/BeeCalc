@@ -9,4 +9,6 @@
     <string name="number_one">Number 1</string>
     <string name="number_two">Number 2</string>
     <string name="about">About</string>
+    <string name="field_required">This field is required</string>
+    <string name="error">Error</string>
 </resources>
