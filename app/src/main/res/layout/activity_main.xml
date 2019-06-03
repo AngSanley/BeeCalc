@@ -81,7 +81,7 @@
             android:layout_marginBottom="20dp">
 
             <AutoCompleteTextView
-                android:id="@+id/filled_exposed_dropdown"
+                android:id="@+id/operation_textedit"
                 android:layout_width="match_parent"
                 android:focusable="false"
                 android:layout_height="wrap_content"

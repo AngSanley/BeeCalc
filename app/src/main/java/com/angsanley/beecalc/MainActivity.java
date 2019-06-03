@@ -17,23 +17,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView resultText;
+    TextView aboutBtn;
+    MaterialButton calculateBtn;
+    TextInputEditText numberOneEdit;
+    TextInputEditText numberTwoEdit;
+    AutoCompleteTextView operationEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        resultText = findViewById(R.id.resultText);
+        aboutBtn = findViewById(R.id.about_btn);
+        calculateBtn = findViewById(R.id.calculate_button);
+        numberOneEdit = findViewById(R.id.number_one_textedit);
+        numberTwoEdit = findViewById(R.id.number_two_textedit);
+        operationEdit = findViewById(R.id.operation_textedit);
+
         String[] OPERATION = new String[] {getString(R.string.addition), getString(R.string.subtraction), getString(R.string.multiplication), getString(R.string.division)};
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(
+        ArrayAdapter adapter = new ArrayAdapter<>(
                 this,
                 R.layout.dropdown_menu_popup_item,
                 OPERATION);
 
-        AutoCompleteTextView editTextFilledExposedDropdown =
-                findViewById(R.id.filled_exposed_dropdown);
-        editTextFilledExposedDropdown.setAdapter(adapter);
+        operationEdit.setAdapter(adapter);
     }
 }
